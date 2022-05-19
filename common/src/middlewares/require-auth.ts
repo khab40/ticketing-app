@@ -6,6 +6,9 @@ export const requireAuth = (
   res: Response,
   next: NextFunction
 ) => {
+  console.log('COMMON::Session from request is: ' + req.session!);
+  console.log('COMMON::Current user from request is: ' + req.currentUser!);
+
   if (!req.currentUser) {
     throw new NotAuthorizedError();
   }

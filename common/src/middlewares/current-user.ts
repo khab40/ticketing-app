@@ -20,16 +20,20 @@ export const currentUser = (
   next: NextFunction
 ) => {
   if (!req.session?.jwt) {
+    console.log('COMMON::no JWT in session found');
     return next();
   }
-
+  
   try {
     const payload = jwt.verify(
       req.session.jwt,
       process.env.JWT_KEY!
     ) as UserPayload;
     req.currentUser = payload;
-  } catch (err) {}
+    console.log('CURRENT_USER IS=='+payload);
+  } catch (err) {
+    console.log('There was unexpected error.');
+  }
 
   next();
 };
