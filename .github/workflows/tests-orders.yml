@@ -1,19 +1,26 @@
 name: tests-orders
 
-on: 
+on:
   pull_request:
     paths:
-      - 'orders/**'
-  
+      - "orders/**"
+      - ".github/workflows/tests-orders.yml"
+
 permissions:
   contents: read
 
-jobs: 
-  build: 
+jobs:
+  test:
     runs-on: ubuntu-latest
-    steps: 
+    defaults:
+      run:
+        working-directory: orders
+    steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
-      - run: cd orders && npm install && npm run test:ci
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: orders/package-lock.json
+      - run: npm ci
+      - run: npm run test:ci

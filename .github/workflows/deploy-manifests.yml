@@ -1,22 +1,30 @@
 name: deploy-manifests
 
-on: 
-  push: 
-    branches: 
+on:
+  push:
+    branches:
       - master
     paths:
-      - 'infra/**'
+      - "infra/**"
+      - ".github/workflows/deploy-manifests.yml"
 
 permissions:
   contents: read
 
-jobs: 
-  build:  
+jobs:
+  deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
     steps:
       - uses: actions/checkout@v4
-      - uses: digitalocean/action-doctl@v3
+      - uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-      - run: doctl kubernetes cluster kubeconfig save ticketing
-      - run: kubectl apply -f infra/k8s && kubectl apply -f infra/k8s-prod
+      - name: Configure kubectl
+        run: doctl kubernetes cluster kubeconfig save ticketing
+      - name: Apply manifests
+        run: |
+          kubectl apply -f infra/k8s
+          kubectl apply -f infra/k8s-prod
