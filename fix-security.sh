@@ -9,9 +9,10 @@ for dir in auth tickets orders payments expiration nats-test client; do
     if [ -d "$dir" ]; then
         echo "Processing $dir..."
         cd "$dir"
-        rm -f package-lock.json
-        npm install 2>&1 | tail -5 || true
-        npm audit fix --force 2>&1 | tail -5 || true
+        # First ensure we have dependencies installed
+        npm install --legacy-peer-deps 2>&1 | tail -3 || true
+        # Then fix vulnerabilities
+        npm audit fix --force --legacy-peer-deps 2>&1 | tail -5 || true
         cd ..
         echo "$dir done."
     fi
