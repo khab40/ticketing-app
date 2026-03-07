@@ -1,5 +1,5 @@
 Summary
-This project is a microservices-based application that handles various functionalities such as authentication, payments, orders, and ticket management. Each service is likely designed to operate independently, communicating through events, possibly using NATS for messaging. The application is built using TypeScript and Node.js, with a focus on modularity and scalability.
+This project is a microservices-based application from the course of Stephen Grider on udemy.com that handles various functionalities such as authentication, payments, orders, and ticket management. Each service is likely designed to operate independently, communicating through events, possibly using NATS for messaging. The application is built using TypeScript and Node.js, with a focus on modularity and scalability.
 
 Technologies
 Docker, JavaScript, Node.js, TypeScript, Express, Jest, Mongoose
